@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.alnehal.chiniotestimatorpakwan.SubCategoriesActivity;
 
@@ -268,6 +269,23 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public  void deleteAllProducts()
+    {
+        try
+        {
+            SQLiteDatabase db = getWritableDatabase();
+
+            db.delete(PRODUCTS, null, null);
+            db.close();
+
+        }
+        catch (Exception e)
+        {
+            Log.e("error",e.getMessage());
+        }
+
+    }
+
 
     public void insertProducts(ArrayList<ItemModel> itemModelArrayList) {
         SQLiteDatabase db = getWritableDatabase();
@@ -397,12 +415,19 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getTotalCartCounter() {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor itemsCursor = db.rawQuery("SELECT  " + PRODUCT_ID + " FROM " + CART, null);
-        int count = itemsCursor.getCount();
-        itemsCursor.close();
-        db.close();
-        return count;
+        int count=0;
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            Cursor itemsCursor = db.rawQuery("SELECT  " + PRODUCT_ID + " FROM " + CART, null);
+             count = itemsCursor.getCount();
+            itemsCursor.close();
+            db.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+        return  count;
     }
 
     public int getTotalProducts() {

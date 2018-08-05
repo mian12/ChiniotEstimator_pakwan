@@ -310,6 +310,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_add_item);
 
+        databaseHelper=new SQLiteDatabaseHelper(context);
         EditText etSearchItem = (EditText) dialog.findViewById(R.id.etSearchItem);
         ListView lvItems = (ListView) dialog.findViewById(R.id.lvItems);
         itemsListBeforeFilter = databaseHelper.getAllProducts();
@@ -1466,6 +1467,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         if (itemModelArrayList.size() > 0) {
+
             new InsertProductsAsync().execute();
         } else {
             hideProgress();
@@ -1558,6 +1560,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected Void doInBackground(Void... params) {
+
             databaseHelper.insertProducts(itemModelArrayList);
             return null;
         }
@@ -1613,6 +1616,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void updateCartCounter() {
+        databaseHelper=new SQLiteDatabaseHelper(context);
         int totalCartItems = databaseHelper.getTotalCartCounter();
         if (totalCartItems > 0) {
             badgeStyle.setColor(Color.GRAY);
