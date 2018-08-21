@@ -44,7 +44,7 @@ public    class MyApplication extends Application {
 
 
 
-
+  public static String URL_TABBED_PAGE ="  http://pakwan.alnaharsolution.com/index.php/product/fetchTabPageItems";
   public static String URL_PACKAGE_MENU ="http://pakwan.alnaharsolution.com/index.php/menu/fetchAllWithItems";
   public static String URL_EXTRA_ITEMS="http://pakwan.alnaharsolution.com/index.php/product/fetchExtraItems";
   public static String URL_SAVE_CART="http://pakwan.alnaharsolution.com/index.php/estimate/saveApp";

@@ -38,4 +38,6 @@
     <dimen name="dp160">160dp</dimen>
 
     <integer name="dp5">5</integer>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

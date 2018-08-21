@@ -7,6 +7,8 @@ package model;
 public class ItemModel {
 
 
+
+    private  String pageNo;
     private int product_id;
     private int meat_type;
     private String date;
@@ -39,6 +41,15 @@ public class ItemModel {
     private double amountTotal;
     private int isAddedToCart;
     private double itemCartQty;
+
+
+    public String getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(String pageNo) {
+        this.pageNo = pageNo;
+    }
 
 
     public int getProduct_id() {

@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.alnehal.chiniotestimatorpakwan.ChiniotPackage.ChiniotPackageActivity;
+import com.alnehal.chiniotestimatorpakwan.ChiniotPackage.TabbedHomeActivity;
 
+import adapter.MyTabbedFragmentAdapter;
 import utilis.MyApplication;
 import utilis.SharedPreferenceClass;
 
@@ -62,7 +64,8 @@ public class HomeActivity extends AppCompatActivity{
         estimateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,CategoriesGridMenu.class));
+             //   startActivity(new Intent(HomeActivity.this,CategoriesGridMenu.class));
+                startActivity(new Intent(HomeActivity.this, TabbedHomeActivity.class));
             }
         });
 

@@ -27,6 +27,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     //tables
     private static final String CART = "cart";
     private static final String PRODUCTS = "products";
+    private static final String PRODUCTS_PAGE_VISE = "products_pageVise";
     private static final String CATEGORIES = "categories";
     private static final String SUB_CATEGORIES = "sub_categories";
 
@@ -48,6 +49,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     private static final String MEAT_TYPE = "meat_type";
     private static final String DATE = "date";
     private static final String NAME = "name";
+    private static final String PAGE_NUMBER = "pageNo";
     private static final String URDU_NAME = "urdu_name";
     private static final String UOM = "uom";
     private static final String LABOUR = "labour";
@@ -84,7 +86,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create Table " + PRODUCTS + "(" + PRODUCT_ID + " Integer, " + MEAT_TYPE + " Integer," + DATE + " text,"
+            db.execSQL("Create Table " + PRODUCTS + "(" + PRODUCT_ID + " Integer, " + MEAT_TYPE + " Integer," + DATE + " text,"
                 + NAME + " text," + URDU_NAME + " text," + UOM + " text," + LABOUR + " text,"
                 + PAY_MODE + " text," + PARTY_ID + " integer," + RATE_EXPT_MEAT + " integer,"
                 + WEIGHT_MEAT + " integer," + URDU_UOM + " text," + SPECIFICATION + " text,"
@@ -93,6 +95,18 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
                 + DATE_TIME + " text," + CATID + " integer ," + SUBCATID + " integer ,"
                 + KITCHENID + " integer ," + PHOTO + " text," + CATEGORY_NAME + " text,"
                 + SUBCATEGORY_NAME + " text," + KITCHEN_NAME + " text, " + MRATE + " integer," + IS_ADDED_TO_CART + " integer DEFAULT 0)");
+
+
+        db.execSQL("Create Table " + PRODUCTS_PAGE_VISE + "(" + PRODUCT_ID + " Integer, " + MEAT_TYPE + " Integer," + DATE + " text,"+ PAGE_NUMBER + " text,"
+                + NAME + " text," + URDU_NAME + " text," + UOM + " text," + LABOUR + " text,"
+                + PAY_MODE + " text," + PARTY_ID + " integer," + RATE_EXPT_MEAT + " integer,"
+                + WEIGHT_MEAT + " integer," + URDU_UOM + " text," + SPECIFICATION + " text,"
+                + PER_PERSON + " integer ," + STATUS + " integer ," + ID + " integer ,"
+                + SERVING + " integer ," + ROUND + " integer ," + UID + " integer ,"
+                + DATE_TIME + " text," + CATID + " integer ," + SUBCATID + " integer ,"
+                + KITCHENID + " integer ," + PHOTO + " text," + CATEGORY_NAME + " text,"
+                + SUBCATEGORY_NAME + " text," + KITCHEN_NAME + " text, " + MRATE + " integer," + IS_ADDED_TO_CART + " integer DEFAULT 0)");
+
 
         db.execSQL("Create Table " + CART + "(" + CART_ID + " Integer PRIMARY KEY AUTOINCREMENT, " + PRODUCT_ID + " Integer, " +
                 PRODUCT__CART_QTY + " Integer)");
@@ -108,6 +122,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + PRODUCTS);
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCTS_PAGE_VISE);
         db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES);
         db.execSQL("DROP TABLE IF EXISTS " + SUB_CATEGORIES);
         db.execSQL("DROP TABLE IF EXISTS " + CART);
@@ -294,6 +309,8 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
 
         for (int i = 0; i < itemModelArrayList.size(); i++) {
             itemModel = itemModelArrayList.get(i);
+//            Log.e("page",itemModel.getPageNo());
+//            S.put(PAGE_NUMBER, itemModel.getPageNo());
             S.put(PRODUCT_ID, itemModel.getProduct_id());
             S.put(MEAT_TYPE, itemModel.getMeat_type());
             S.put(DATE, itemModel.getDate());
@@ -344,6 +361,109 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         insertSubCategories(subCategoriesModelArrayList);*/
     }
+
+
+
+    public void insertProductsPageVise(ArrayList<ItemModel> itemModelArrayList) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues S = new ContentValues();
+        ItemModel itemModel = null;
+
+        for (int i = 0; i < itemModelArrayList.size(); i++) {
+            itemModel = itemModelArrayList.get(i);
+            Log.e("page",itemModel.getPageNo());
+            S.put(PAGE_NUMBER, itemModel.getPageNo());
+            S.put(PRODUCT_ID, itemModel.getProduct_id());
+            S.put(MEAT_TYPE, itemModel.getMeat_type());
+            S.put(DATE, itemModel.getDate());
+            S.put(NAME, itemModel.getName());
+            S.put(URDU_NAME, itemModel.getUrdu_name());
+            S.put(UOM, itemModel.getUom());
+            S.put(LABOUR, itemModel.getLabour());
+            S.put(PAY_MODE, itemModel.getPay_mode());
+            S.put(PARTY_ID, itemModel.getParty_id());
+            S.put(RATE_EXPT_MEAT, itemModel.getRate_expt_meat());
+            S.put(WEIGHT_MEAT, itemModel.getWeight_meat());
+            S.put(URDU_UOM, itemModel.getUrdu_uom());
+            S.put(SPECIFICATION, itemModel.getSpecification());
+            S.put(PER_PERSON, itemModel.getPer_person());
+            S.put(STATUS, itemModel.getStatus());
+            S.put(ID, itemModel.getId());
+            S.put(SERVING, itemModel.getServing());
+            S.put(ROUND, itemModel.getRound());
+            S.put(UID, itemModel.getUid());
+            S.put(DATE_TIME, itemModel.getDate_time());
+            S.put(CATID, itemModel.getCatid());
+            S.put(SUBCATID, itemModel.getSubcatid());
+            S.put(KITCHENID, itemModel.getKitchenid());
+            S.put(PHOTO, itemModel.getPhoto());
+            S.put(CATEGORY_NAME, itemModel.getCategory_name());
+            S.put(SUBCATEGORY_NAME, itemModel.getSubcategory_name());
+            S.put(KITCHEN_NAME, itemModel.getKitchen_name());
+            S.put(MRATE, itemModel.getMrate());
+            db.insert(PRODUCTS_PAGE_VISE, null, S);
+        }
+        db.close();
+
+    }
+
+
+    public ArrayList<ItemModel> getProductsByPageVisw(String pageNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<ItemModel> productPageViseArrayList = new ArrayList<>();
+        ItemModel itemModel = null;
+        Cursor itemsCursor=null;
+        try {
+            itemsCursor = db.rawQuery("SELECT  * FROM " + PRODUCTS_PAGE_VISE + " WHERE " + PAGE_NUMBER + "='" + pageNo +"' ", null);
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
+        }
+
+        while (itemsCursor.moveToNext()) {
+            itemModel = new ItemModel();
+            itemModel.setPageNo(itemsCursor.getString(itemsCursor.getColumnIndex(PAGE_NUMBER)));
+            itemModel.setProduct_id(itemsCursor.getInt(itemsCursor.getColumnIndex(PRODUCT_ID)));
+            itemModel.setMeat_type(itemsCursor.getInt(itemsCursor.getColumnIndex(MEAT_TYPE)));
+            itemModel.setDate(itemsCursor.getString(itemsCursor.getColumnIndex(DATE)));
+            itemModel.setName(itemsCursor.getString(itemsCursor.getColumnIndex(NAME)));
+            itemModel.setUrdu_name(itemsCursor.getString(itemsCursor.getColumnIndex(URDU_NAME)));
+            itemModel.setUom(itemsCursor.getString(itemsCursor.getColumnIndex(UOM)));
+            itemModel.setLabour(itemsCursor.getString(itemsCursor.getColumnIndex(LABOUR)));
+            itemModel.setPay_mode(itemsCursor.getString(itemsCursor.getColumnIndex(PAY_MODE)));
+            itemModel.setParty_id(itemsCursor.getInt(itemsCursor.getColumnIndex(PARTY_ID)));
+            itemModel.setRate_expt_meat(itemsCursor.getDouble(itemsCursor.getColumnIndex(RATE_EXPT_MEAT)));
+            itemModel.setWeight_meat(itemsCursor.getDouble(itemsCursor.getColumnIndex(WEIGHT_MEAT)));
+            itemModel.setUrdu_uom(itemsCursor.getString(itemsCursor.getColumnIndex(URDU_UOM)));
+            itemModel.setSpecification(itemsCursor.getString(itemsCursor.getColumnIndex(SPECIFICATION)));
+            itemModel.setPer_person(itemsCursor.getDouble(itemsCursor.getColumnIndex(PER_PERSON)));
+            itemModel.setStatus(itemsCursor.getInt(itemsCursor.getColumnIndex(STATUS)));
+            itemModel.setId(itemsCursor.getInt(itemsCursor.getColumnIndex(ID)));
+            itemModel.setServing(itemsCursor.getDouble(itemsCursor.getColumnIndex(SERVING)));
+            itemModel.setRound(itemsCursor.getInt(itemsCursor.getColumnIndex(ROUND)));
+            itemModel.setUid(itemsCursor.getInt(itemsCursor.getColumnIndex(UID)));
+            itemModel.setDate_time(itemsCursor.getString(itemsCursor.getColumnIndex(DATE_TIME)));
+            itemModel.setCatid(itemsCursor.getInt(itemsCursor.getColumnIndex(CATID)));
+            itemModel.setSubcatid(itemsCursor.getInt(itemsCursor.getColumnIndex(SUBCATID)));
+            itemModel.setKitchenid(itemsCursor.getInt(itemsCursor.getColumnIndex(KITCHENID)));
+            itemModel.setPhoto(itemsCursor.getString(itemsCursor.getColumnIndex(PHOTO)));
+            itemModel.setCategory_name(itemsCursor.getString(itemsCursor.getColumnIndex(CATEGORY_NAME)));
+            itemModel.setSubcategory_name(itemsCursor.getString(itemsCursor.getColumnIndex(SUBCATEGORY_NAME)));
+            itemModel.setKitchen_name(itemsCursor.getString(itemsCursor.getColumnIndex(KITCHEN_NAME)));
+            itemModel.setMrate(itemsCursor.getDouble(itemsCursor.getColumnIndex(MRATE)));
+
+            itemModel.setIsAddedToCart(itemsCursor.getInt(itemsCursor.getColumnIndex(IS_ADDED_TO_CART)));
+
+            productPageViseArrayList.add(itemModel);
+        }
+        itemsCursor.close();
+        db.close();
+        return productPageViseArrayList;
+    }
+
+
+
 
     public void insertCategories(ArrayList<CategoriesModel> categoriesModelArrayList) {
         SQLiteDatabase db = getWritableDatabase();

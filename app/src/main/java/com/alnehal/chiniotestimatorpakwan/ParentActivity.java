@@ -172,7 +172,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-    String party_uname = "", party_mobile = "", party_city = "", party_address = "", party_limit = "0.0", party_cityarea = "",
+    String party_uname = "", page_no="", party_mobile = "", party_city = "", party_address = "", party_limit = "0.0", party_cityarea = "",
             date_time = "", party_name = "", oid = "0", vrno = "0", vrnoa = "0", vrdate = "", etype = "estimate", party_id = "1", order_date = "",
             persons = "1", per_head = "0", total_amount = "0", advance = "0", balance = "0", datetime = "", remarks = "", status1 = "",
             phone = "", uid = "1", ph = "", total_weight = "";
@@ -945,6 +945,7 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
             JSONArray estimateArray = response.getJSONArray("estimate");
             JSONArray estimateDetailArray = response.getJSONArray("estimatedetail");
             JSONObject estimateObject = estimateArray.getJSONObject(0);
+
             party_uname = estimateObject.getString("party_uname");
             party_mobile = estimateObject.getString("party_mobile");
             party_city = estimateObject.getString("party_city");
@@ -1391,6 +1392,9 @@ public class ParentActivity extends AppCompatActivity implements View.OnClickLis
                 JSONObject each = response.getJSONObject(i);
                 ItemModel itemModel;
                 itemModel = new ItemModel();
+
+              //  itemModel.setPageNo(each.getString("page_no"));
+
                 itemModel.setProduct_id(each.getInt("product_id"));
                 itemModel.setMeat_type(each.getInt("meat_type"));
                 itemModel.setDate(each.getString("date"));
